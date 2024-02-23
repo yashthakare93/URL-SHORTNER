@@ -1,5 +1,7 @@
 const express = require('express');
 const urlRoutes = require('./routes/url');
+const staticRoute = require('./routes/staticRouter');
+const path = require('path');
 const cors = require('cors'); 
 const URL = require('./models/url')
 const { initMogoConnection } = require('./connection');
@@ -14,23 +16,29 @@ initMogoConnection("mongodb://localhost:27017/short-url").then(() => {
 });
 
 app.use(cors());
-app.use(express.json());
-app.use((req, res, next) => {
-    const body = req.body;
-    if (body.url) {
-        const expression = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/i;
-        const regex = new RegExp(expression);
-        if (regex.test(body.url)) {
-            next();
-        } else {
 
-            console.log('Invalid URL:', body.url);
-            return res.status(400).json({ "error": "Invalid URL." });
-        }
-    } else {
-        next();
-    }
-});
+app.set("view engine","ejs");
+app.set('views',path.resolve('./views'));
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+// app.use((req, res, next) => {
+//     const body = req.body;
+//     if (body.url) {
+//         const expression = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/i;
+//         const regex = new RegExp(expression);
+//         if (regex.test(body.url)) {
+//             next();
+//         } else {
+
+//             console.log('Invalid URL:', body.url);
+//             return res.status(400).json({ "error": "Invalid URL." });
+//         }
+//     } else {
+//         next();
+//     }
+// });
 
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
@@ -38,7 +46,9 @@ app.use((err, req, res, next) => {
 });
 app.use('/url', urlRoutes);
 
-app.get('/:shortId', async (req, res) => {
+app.use('/',staticRoute);
+
+app.get('/url/:shortId', async (req, res) => {
 
     try {
         const shortId = req.params.shortId;
