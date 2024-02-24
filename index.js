@@ -1,9 +1,15 @@
 const express = require('express');
-const urlRoutes = require('./routes/url');
-const staticRoute = require('./routes/staticRouter');
 const path = require('path');
 const cors = require('cors'); 
-const URL = require('./models/url')
+const URL = require('./models/url');
+const cookieParser = require('cookie-parser');
+
+const urlRoutes = require('./routes/url');
+const staticRoute = require('./routes/staticRouter');
+const userRoute = require('./routes/user');
+
+const {validateToLoggedinUser,checkAuth} = require('./middelware/auth');
+
 const { initMogoConnection } = require('./connection');
 const app = express();
 const PORT = 8001;
@@ -15,38 +21,23 @@ initMogoConnection("mongodb://localhost:27017/short-url").then(() => {
     process.exit(1);
 });
 
-app.use(cors());
-
 app.set("view engine","ejs");
 app.set('views',path.resolve('./views'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 
-// app.use((req, res, next) => {
-//     const body = req.body;
-//     if (body.url) {
-//         const expression = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/i;
-//         const regex = new RegExp(expression);
-//         if (regex.test(body.url)) {
-//             next();
-//         } else {
-
-//             console.log('Invalid URL:', body.url);
-//             return res.status(400).json({ "error": "Invalid URL." });
-//         }
-//     } else {
-//         next();
-//     }
-// });
 
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
     res.status(500).json({ error: 'Internal server error' });
 });
-app.use('/url', urlRoutes);
 
-app.use('/',staticRoute);
+app.use('/url',validateToLoggedinUser, urlRoutes);
+app.use('/',checkAuth,staticRoute);
+app.use('/user',userRoute);
+
 
 app.get('/url/:shortId', async (req, res) => {
 
@@ -75,6 +66,6 @@ app.get('/url/:shortId', async (req, res) => {
 })
 
 
-app.listen(PORT, () => {
+app.listen(PORT,'0.0.0.0', () => {
     console.log(`Server started at port: ${PORT}`);
 });

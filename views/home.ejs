@@ -44,7 +44,7 @@
             color: rgb(229, 170, 20);
         }
 
-        .form-container{
+        .form-container {
             width: 110%;
             gap: 3%;
             display: inline-flex;
@@ -61,8 +61,9 @@
         <h1>URL <span>SHORTNER</span></h1>
         <div class="container-info">
             <% if (locals.id) { %>
-                <p>URL Generate : http://localhost:8001/url/<%= id%>
-                </p>
+
+                <p>URL Generate : <a href="http://localhost:8001/url/<%= id %>">http://localhost:8001/url/<%= id%>
+                    </a></p>
                 <% } %>
 
                     <div>
@@ -78,7 +79,7 @@
 
     </div>
     <br>
-   
+
     <% if (locals.urls) { %>
         <h1>Analytics</h1>
         <table>
@@ -96,7 +97,9 @@
                             <%= index + 1 %>
                         </td>
                         <td>
-                            <%= url.shortId %>
+                            <a style="text-decoration: none;" href="http://localhost:8001/url/<%= url.shortId %>">
+                                <%= url.shortId %>
+                            </a>
                         </td>
                         <td>
                             <%= url.redirectURL %>
@@ -109,8 +112,16 @@
             </tbody>
 
         </table>
+        
         <% } %>
-
+            <script>
+                window.addEventListener('pageshow', function (event) {
+                    // If the page is loaded from the bfcache, reload it
+                    if (event.persisted) {
+                        location.reload();
+                    }
+                });
+            </script>
 </body>
 
 </html>
