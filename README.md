@@ -28,7 +28,7 @@ This project is a Node.js application designed for URL shortening and analytics 
 #### Redirect Short URL
 
 ```
-    GET /:shortId
+    GET /url/:shortId
 ```
 
 | Parameter | Type     | Description                       |
