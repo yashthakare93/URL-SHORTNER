@@ -1,4 +1,4 @@
-const {v4 : uuidv4} = require('uuid');
+
 const {setUser} = require('../service/auth')
 const User = require('../models/user');
 
