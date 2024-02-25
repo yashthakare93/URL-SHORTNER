@@ -5,8 +5,9 @@
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
-            padding-inline: 10%;
-            padding-top: 5%;
+            padding-inline: 5%;
+            padding-top: 1%;
+            box-sizing: border-box;
         }
 
         table {
@@ -32,12 +33,13 @@
             background-color: #f2f2f2;
         }
 
-        .container {
+        .url-container {
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 40vh;
+            height: 80vh;
         }
 
         span {
@@ -49,79 +51,123 @@
             gap: 3%;
             display: inline-flex;
         }
+
+        img {
+            width: 100px;
+           
+        }
+
+        .nav-bar ul {
+            padding: 10px;
+            padding-right: 20px;
+            display: flex;
+            justify-content:flex-end;
+            gap: 80px;
+            list-style: none;
+            font-size: 18px;
+            font-weight: 700;
+            
+        }
+        .nav-bar ul li a{
+            text-decoration: none;
+        }
+       
+        .analytics{
+            margin-top: 5%;
+        }
     </style>
+
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>HOME PAGE</title>
 </head>
 
 <body>
     <div class="container">
-        <h1>URL <span>SHORTNER</span></h1>
-        <div class="container-info">
-            <% if (locals.id) { %>
+        <nav>
+            <div class="nav-bar">
+            <ul> 
+                <li>   <a href="/logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a></li>
+               
+            </div>
+        </nav>
 
-                <p>URL Generate : <a href="<%= baseUrl %>/url/<%= id %>">http://localhost:8001/url/<%= id%>
-                    </a></p>
-                <% } %>
+        <div class="url-container">
+            <h1>URL <span>SHORTNER</span></h1>
+            <div class="container-info">
+                <% if (locals.id) { %>
 
-                    <div>
-                        <form method="post" action="/url">
-                            <div class="form-container">
-                                <div class=""><label>Enter Your Original URL</label></div>
-                                <div class=""><input type="text" name="url" placeholder="http://www.example.com"></div>
-                                <div class=""><button type="submit">Generate</button></div>
-                            </div>
-                        </form>
-                    </div>
+                    <p>URL Generate : <a href="<%= baseUrl %>/url/<%= id %>">http://localhost:8001/url/<%= id%>
+                        </a></p>
+                    <% } %>
+
+                        <div>
+                            <form method="post" action="/url">
+                                <div class="form-container">
+                                    <div class=""><label>Enter Your Original URL</label></div>
+                                    <div class=""><input type="text" name="url" placeholder="http://www.example.com">
+                                    </div>
+                                    <div class=""><button type="submit">Generate</button></div>
+                                </div>
+                            </form>
+                        </div>
+
+
+            </div>
+            <div class="analytics"></div>
+                <% if (locals.urls) { %>
+                    <h1>Analytics</h1>
+                    <table>
+                        <thead>
+                            <th>sr.no</th>
+                            <th>ShortId</th>
+                            <th>Redirect</th>
+                            <th>Clicks</th>
+                        </thead>
+
+                        <tbody>
+                            <% urls.forEach(function(url, index) { %>
+                                <tr>
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td>
+                                        <a style="text-decoration: none;" href="<%= baseUrl %>/url/<%= url.shortId %>">
+                                            <%= url.shortId %>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <%= url.redirectURL %>
+                                    </td>
+                                    <td>
+                                        <%= url.visitsHistory.length %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+
+                    </table>
+
+           
+
+
+            <% } %>
         </div>
-
     </div>
-    <br>
 
-    <% if (locals.urls) { %>
-        <h1>Analytics</h1>
-        <table>
-            <thead>
-                <th>sr.no</th>
-                <th>ShortId</th>
-                <th>Redirect</th>
-                <th>Clicks</th>
-            </thead>
+    <script>
 
-            <tbody>
-                <% urls.forEach(function(url, index) { %>
-                    <tr>
-                        <td>
-                            <%= index + 1 %>
-                        </td>
-                        <td>
-                            <a style="text-decoration: none;" href="<%= baseUrl %>/url/<%= url.shortId %>">
-                                <%= url.shortId %>
-                            </a>
-                        </td>
-                        <td>
-                            <%= url.redirectURL %>
-                        </td>
-                        <td>
-                            <%= url.visitsHistory.length %>
-                        </td>
-                    </tr>
-                    <% }); %>
-            </tbody>
-
-        </table>
-        
-        <% } %>
-            <script>
-                window.addEventListener('pageshow', function (event) {
-                    // If the page is loaded from the bfcache, reload it
-                    if (event.persisted) {
-                        location.reload();
-                    }
-                });
-            </script>
+        window.addEventListener('pageshow', function (event) {
+            // If the page is loaded from the bfcache, reload it
+            if (event.persisted) {
+                location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>
