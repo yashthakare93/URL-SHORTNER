@@ -22,6 +22,7 @@ router.get('/logout',async(req,res)=>{
     res.clearCookie('uid');
     return res.redirect('/login');
 })
-
-
+router.get('/contact',async(req,res)=>{
+    return res.render('contact');
+})
 module.exports = router;
