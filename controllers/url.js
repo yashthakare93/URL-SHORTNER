@@ -1,5 +1,6 @@
 const URL = require('../models/url');
 const shortID = require('shortid');
+const config = require('../config');
 
 //generates new shortUrl
 async function handleNewShortUrlGeneration(req, res) {
@@ -15,7 +16,7 @@ async function handleNewShortUrlGeneration(req, res) {
             visitsHistory: [],
             createdBy: req.user._id,
         });
-        return res.render('home', { id: createdURL.shortId });
+        return res.render('home', { id: createdURL.shortId , baseUrl : config.baseUrl});
     } catch (error) {
         console.error("Error creating new short URL:", error);
         return res.status(500).json({ error: 'Internal server error' });
