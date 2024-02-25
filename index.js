@@ -14,7 +14,8 @@ const { initMogoConnection } = require('./connection');
 const app = express();
 const PORT = 8001;
 
-initMogoConnection("mongodb://localhost:27017/short-url").then(() => {
+const url = "mongodb+srv://yash:OVOabQTKmhrdOLT9@url-shortner.cbnrpse.mongodb.net/?retryWrites=true&w=majority&appName=url-shortner"
+initMogoConnection(url).then(() => {
     console.log('MongoDB started successfully');
 }).catch(error => {
     console.error('Error starting MongoDB:', error);
