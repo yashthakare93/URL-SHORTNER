@@ -62,7 +62,7 @@
         <div class="container-info">
             <% if (locals.id) { %>
 
-                <p>URL Generate : <a href="http://localhost:8001/url/<%= id %>">http://localhost:8001/url/<%= id%>
+                <p>URL Generate : <a href="<%= baseUrl %>/url/<%= id %>">http://localhost:8001/url/<%= id%>
                     </a></p>
                 <% } %>
 
@@ -97,7 +97,7 @@
                             <%= index + 1 %>
                         </td>
                         <td>
-                            <a style="text-decoration: none;" href="http://localhost:8001/url/<%= url.shortId %>">
+                            <a style="text-decoration: none;" href="<%= baseUrl %>/url/<%= url.shortId %>">
                                 <%= url.shortId %>
                             </a>
                         </td>

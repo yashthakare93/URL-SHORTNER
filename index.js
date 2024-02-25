@@ -7,15 +7,16 @@ const cookieParser = require('cookie-parser');
 const urlRoutes = require('./routes/url');
 const staticRoute = require('./routes/staticRouter');
 const userRoute = require('./routes/user');
+const config = require('./config');
 
 const {validateToLoggedinUser,checkAuth} = require('./middelware/auth');
 
 const { initMogoConnection } = require('./connection');
 const app = express();
 const PORT = 8001;
+console.log(config);
 
-const url = "mongodb+srv://yash:OVOabQTKmhrdOLT9@url-shortner.cbnrpse.mongodb.net/?retryWrites=true&w=majority&appName=url-shortner"
-initMogoConnection(url).then(() => {
+initMogoConnection(config.mongoConnString).then(() => {
     console.log('MongoDB started successfully');
 }).catch(error => {
     console.error('Error starting MongoDB:', error);
