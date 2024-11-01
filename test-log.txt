@@ -1,0 +1,60 @@
+Test run at 2024-10-31T04:04:01.645Z:
+[31mError: No test files found: "authTests.test.js"[39m
+
+Test run at 2024-10-31T04:05:36.914Z:
+
+
+  Authentication Tests for URL Shortener Application
+Attempting to sign up...
+Sign up successful, redirected to login.
+    √ should allow user to sign up (3333ms)
+Attempting to log in...
+    √ should allow user to login (2564ms)
+
+
+  2 passing (8s)
+
+Error during login: WebDriverError: unknown error: net::ERR_CONNECTION_REFUSED
+  (Session info: chrome=130.0.6723.92)
+    at Object.throwDecodedError (C:\Users\DELL\OneDrive\Desktop\URL-SHORTNER-main\node_modules\selenium-webdriver\lib\error.js:521:15)
+    at parseHttpResponse (C:\Users\DELL\OneDrive\Desktop\URL-SHORTNER-main\node_modules\selenium-webdriver\lib\http.js:514:13)
+    at Executor.execute (C:\Users\DELL\OneDrive\Desktop\URL-SHORTNER-main\node_modules\selenium-webdriver\lib\http.js:446:28)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async Driver.execute (C:\Users\DELL\OneDrive\Desktop\URL-SHORTNER-main\node_modules\selenium-webdriver\lib\webdriver.js:744:17)
+    at async Context.<anonymous> (file:///C:/Users/DELL/OneDrive/Desktop/URL-SHORTNER-main/test/authTests.mjs:44:13) {
+  remoteStacktrace: '\tGetHandleVerifier [0x00007FF7C4BA3AB5+28005]\n' +
+    '\t(No symbol) [0x00007FF7C4B083B0]\n' +
+    '\t(No symbol) [0x00007FF7C49A580A]\n' +
+    '\t(No symbol) [0x00007FF7C49A2F5F]\n' +
+    '\t(No symbol) [0x00007FF7C4993E49]\n' +
+    '\t(No symbol) [0x00007FF7C4995BE6]\n' +
+    '\t(No symbol) [0x00007FF7C499410F]\n' +
+    '\t(No symbol) [0x00007FF7C49939BD]\n' +
+    '\t(No symbol) [0x00007FF7C49938DA]\n' +
+    '\t(No symbol) [0x00007FF7C499151E]\n' +
+    '\t(No symbol) [0x00007FF7C4991DEC]\n' +
+    '\t(No symbol) [0x00007FF7C49A88AA]\n' +
+    '\t(No symbol) [0x00007FF7C4A3C6DE]\n' +
+    '\t(No symbol) [0x00007FF7C4A1BA3A]\n' +
+    '\t(No symbol) [0x00007FF7C4A3B8B3]\n' +
+    '\t(No symbol) [0x00007FF7C4A1B7E3]\n' +
+    '\t(No symbol) [0x00007FF7C49E75C8]\n' +
+    '\t(No symbol) [0x00007FF7C49E8731]\n' +
+    '\tGetHandleVerifier [0x00007FF7C4E9643D+3118829]\n' +
+    '\tGetHandleVerifier [0x00007FF7C4EE6C90+3448640]\n' +
+    '\tGetHandleVerifier [0x00007FF7C4EDCF0D+3408317]\n' +
+    '\tGetHandleVerifier [0x00007FF7C4C6A40B+841403]\n' +
+    '\t(No symbol) [0x00007FF7C4B1340F]\n' +
+    '\t(No symbol) [0x00007FF7C4B0F484]\n' +
+    '\t(No symbol) [0x00007FF7C4B0F61D]\n' +
+    '\t(No symbol) [0x00007FF7C4AFEB79]\n' +
+    '\tBaseThreadInitThunk [0x00007FFCFF18259D+29]\n' +
+    '\tRtlUserThreadStart [0x00007FFD00BEAF38+40]\n'
+}
+
+[2024-10-31T04:07:27.511Z] Initialized WebDriver and opened browser.
+[2024-10-31T04:07:27.513Z] Attempting to sign up...
+[2024-10-31T04:07:28.488Z] Sign up successful, redirected to login.
+[2024-10-31T04:07:28.492Z] Attempting to log in...
+[2024-10-31T04:07:29.743Z] Login successful, redirected to: http://localhost:8001/
+[2024-10-31T04:07:29.854Z] Closed WebDriver and exited browser.

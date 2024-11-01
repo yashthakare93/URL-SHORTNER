@@ -1,0 +1,69 @@
+# Test Plan for URL Shortener Application
+
+## Features to Test
+
+1. URL Shortening
+   - Objective: Ensure that valid URLs are successfully shortened.
+   - Steps:
+     - Input various valid URLs and verify that a unique shortened URL is generated each time.
+     - Test URL shortening with special characters, secure protocols (https), and subdomains.
+     - Check if the application prevents duplicate shortened URLs for the same original URL.
+   - Expected Outcome: Each valid URL should generate a unique, shortened URL that stores correctly in the database.
+
+2. Redirection
+   - Objective: Verify that shortened URLs redirect accurately to the original URL.
+   - Steps:
+     - Access the shortened URL and confirm redirection to the original URL.
+     - Test redirection in multiple browsers and devices for compatibility.
+     - Check redirection for URLs with different statuses (e.g., expired links if implemented).
+   - Expected Outcome: Each shortened URL should correctly redirect to its original URL with minimal latency.
+
+3. Error Handling
+   - Objective: Confirm that invalid URLs or expired links display appropriate error messages.
+   - Steps:
+     - Attempt to shorten invalid URLs (e.g., malformed URLs, unsupported protocols).
+     - Access expired or non-existent shortened URLs.
+     - Check for error messages or codes in the response.
+   - Expected Outcome: The application should provide clear, user-friendly error messages for invalid or non-existent URLs.
+
+4. Analytics Tracking
+   - Objective: Ensure that each visit to a shortened URL is logged accurately in the visit history.
+   - Steps:
+     - Access a shortened URL and verify that the visit history updates with the timestamp.
+     - Test logging behavior with multiple visits from different IPs and at different times.
+     - Check analytics data for each shortened URL in the database or user dashboard (if available).
+   - Expected Outcome: Visit history should update with each access, tracking relevant metadata accurately.
+
+## Bug Taxonomy
+
+1. Critical Bugs
+   - Failures in core functionalities such as URL shortening or redirection.
+   - Examples:
+     - URL not shortening or generating invalid shortened URLs.
+     - Shortened URLs failing to redirect or redirecting to incorrect locations.
+
+2. Medium Bugs
+   - Issues with secondary functionalities like visit history tracking and URL format handling.
+   - Examples:
+     - Visit history not updating accurately with each access.
+     - Minor issues in URL format handling (e.g., handling of unusual characters).
+
+3. Low Bugs
+   - Non-critical UI or styling issues that do not affect functionality.
+   - Examples:
+     - Misleading status messages or minor inconsistencies in text styling.
+     - Minor display issues on different screen sizes or browsers.
+
+## Regression Tests
+
+1. URL Shortening
+   - Shorten a new URL and verify it generates correctly in the database.
+   - Confirm that previously shortened URLs remain accessible after new changes or updates to the codebase.
+
+2. Redirection
+   - Access both old and newly shortened URLs to verify consistent redirection behavior.
+   - Test redirection across different devices to check for browser compatibility.
+
+3. Analytics Tracking
+   - Access a shortened URL multiple times and confirm that the visit count or visit history logs each access accurately.
+   - Check for data consistency across multiple accesses and different access timestamps.

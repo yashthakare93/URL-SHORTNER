@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            padding-inline: 5%;
+            padding-top: 1%;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        th {
+            background-color: #f2f2f2;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .url-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 40vh;
+        }
+
+        b {
+            color: rgb(229, 170, 20);
+        }
+
+        .form-container {
+            width: 110%;
+            gap: 3%;
+            display: inline-flex;
+        }
+
+        img {
+            width: 100px;
+
+        }
+
+        .nav-bar ul {
+            padding: 10px;
+            padding-right: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            list-style: none;
+            font-size: 18px;
+            font-weight: 700;
+
+        }
+
+        .nav-bar ul li a {
+            text-decoration: none;
+        }
+
+        .analytics {
+            margin-top: 2%;
+        }
+    </style>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
+
+    <title>HOME PAGE</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-bar">
+                <ul>
+
+                    <li><a href="https://github.com/yashthakare93/URL-SHORTNER" target="_blank"><i class="fab fa-github" style="color: #000000;"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/yash-thakare01/" target="_blank"><i
+                                class="fab fa-linkedin"style="color: #000000;"></i></a></li>
+
+                    <li>
+                        <a href="/logout">
+                            <i class="fas fa-sign-out-alt"style="color: #000000;"></i>
+                        </a>
+                    </li>
+            </div>
+        </nav>
+
+        <div class="url-container">
+            <h1>URL <b>SHORTNER</b></h1>
+
+            <div class="container-info">
+                <% if (locals.id) { %>
+
+                    <p>URL Generate : <a href="<%= baseUrl %>/url/<%= id %>">http://localhost:8001/url/<%= id%>
+                        </a></p>
+                    <% } %>
+
+                        <div>
+                            <form method="post" action="/url">
+                                <div class="form-container">
+                                    <div class=""><label>Enter Your Original URL</label></div>
+                                    <div class=""><input type="text" name="url" placeholder="http://www.example.com">
+                                    </div>
+                                    <div class=""><button type="submit">Generate</button></div>
+                                </div>
+                            </form>
+                        </div>
+
+            </div>
+        </div>
+        <div class="analytics"></div>
+        <% if (locals.urls) { %>
+            <h1>Analytics</h1>
+            <table id="analytics">
+                <thead>
+                    <th>sr.no</th>
+                    <th>ShortId</th>
+                    <th>Redirect</th>
+                    <th>Clicks</th>
+                </thead>
+
+                <tbody>
+                    <% urls.forEach(function(url, index) { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <a style="text-decoration: none;" href="<%= baseUrl %>/url/<%= url.shortId %>">
+                                    <%= url.shortId %>
+                                </a>
+                            </td>
+                            <td>
+                                <%= url.redirectURL %>
+                            </td>
+                            <td>
+                                <%= url.visitsHistory.length %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+
+            </table>
+
+
+
+
+            <% } %>
+    </div>
+
+
+    <script>
+
+
+        // Execute when the DOM is fully loaded
+        window.onload = function () {
+            var tableOptions = {
+                "paging": true,
+                "ordering": true,
+                "searching": true,
+                // "lengthMenu": [10, 25, 50, 100],
+                "lengthChange": false,
+                "pageLength": 10,
+                "scrollX": true,
+                // "scrollY": "400px",
+                "scrollCollapse": true,
+                "autoWidth": false,
+            };
+
+            // Initialize DataTable with the specified options
+            var table = new DataTable('#analytics', tableOptions);
+            // Get the current URL
+            var currentUrl = window.location.href;
+
+            // Parse the URL to get query parameters
+            var urlParams = new URLSearchParams(window.location.search);
+
+            // Now you can access individual parameters
+            var paramValue = urlParams.get('shortId');
+            if (paramValue != "" && paramValue != null) {
+                var baseUrl = '<%= baseUrl %>';
+
+                // Construct the URL with dynamic values
+                var url = baseUrl + "/url/" + paramValue;
+
+                // Display success message with generated URL
+                Swal.fire({
+                    title: "URL Generated!",
+                    html: " <a href='" + url + "'>" + url + "</a>",
+                    icon: "success"
+
+                }).then(() => {
+                    var baseUrl = window.location.origin + window.location.pathname;
+                    history.replaceState({}, document.title, baseUrl);
+                })
+
+            }
+
+            // Example: Log the parameter value to the console
+            console.log('Param Value:', paramValue);
+        };
+
+        window.addEventListener('pageshow', function (event) {
+            // If the page is loaded from the bfcache, reload it
+            if (event.persisted) {
+                location.reload();
+            }
+        });
+    </script>
+</body>
+
+</html>
