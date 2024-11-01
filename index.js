@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
+<<<<<<< HEAD
 const cors = require('cors');
+=======
+const cors = require('cors'); 
+>>>>>>> origin/main
 const URL = require('./models/url');
 const cookieParser = require('cookie-parser');
 
