@@ -1,5 +1,5 @@
 Sign up successful, redirected to login.
 Login successful, redirected to: http://localhost:8001/
-Generated Short URL: http://localhost:8001/url/IisuHdrIp
+Generated Short URL: http://localhost:8001/url/qpjyZlXFD
 Error during invalid URL test: AssertionError: expected 3 to equal +0
 Logout successful.
