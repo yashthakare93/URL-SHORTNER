@@ -1,5 +1,11 @@
 Sign up successful, redirected to login.
 Login successful, redirected to: http://localhost:8001/
-Generated Short URL: http://localhost:8001/url/qpjyZlXFD
+Short URL generation failed: AssertionError: expected 'http://localhost:8001/url/-6BqfwuGv' to match /http:\/\/localhost:8001\/url\/\w+/
 Error during invalid URL test: AssertionError: expected 3 to equal +0
-Logout successful.
+Error during empty URL test: TimeoutError: Waiting for element to be located By(css selector, .error-message)
+Wait timed out after 10076ms
+Redirection successful from http://localhost:8001/url/-6BqfwuGv to https://www.example.com/
+Error during duplicate URL test: StaleElementReferenceError: stale element reference: stale element not found
+  (Session info: chrome=130.0.6723.92)
+Redirection successful to HTTPS site: https://www.example.com/
+User successfully logged out.
